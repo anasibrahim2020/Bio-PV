@@ -1,4 +1,8 @@
 // ═══════════════════════════════════════════════════════════════
+//  UNUSED — leftover from a different project (Zamzam Hajj & Umrah).
+//  Wrong company name, emails, and logo throughout. Not deployed/wired
+//  for BioNutrition. Push notifications now live in ../push-notify.
+// ═══════════════════════════════════════════════════════════════
 //  Supabase Edge Function: notify
 //  إشعارات (إيميل + واتساب) عند 3 أحداث على جدول requests (Database Webhook):
 //   1) INSERT لطلب صرف (disb)             → إشعار المحاسب

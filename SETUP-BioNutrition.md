@@ -41,6 +41,40 @@ In **SQL Editor → New query**, paste [`supabase/acknowledge.sql`](supabase/ack
 
 ---
 
+## Push notifications (partners get notified on every new voucher; you get notified on every acknowledgement)
+
+### a) Run the SQL
+In **SQL Editor → New query**, paste [`supabase/push-notifications.sql`](supabase/push-notifications.sql) → **Run**. Creates `push_subscriptions` (one row per device that turns notifications on), secured so each account only manages its own rows.
+
+### b) Deploy the Edge Function
+**Edge Functions → Create a new function** → name it `push-notify` → paste the contents of [`supabase/functions/push-notify/index.ts`](supabase/functions/push-notify/index.ts) → **Deploy**.
+
+### c) Add 3 secrets
+**Edge Functions → Secrets** → add:
+```
+VAPID_PUBLIC_KEY  = BACSmK7YzeoVimlqFhg7vEQe4-YvsqdyrUpF3DvWHE5psBSDGb7FPXJGxtPVaH1pIaR5t7b4YI-kwEjq4_MWd2M
+VAPID_PRIVATE_KEY = Xmue44HanGIjbj7SHkuukW2bYFMiiXefIWNyIWE-PDU
+VAPID_SUBJECT     = mailto:admin@bionutritionmedical.com
+```
+These two keys are already generated and matched to the `VAPID_PUBLIC_KEY` constant in `script-5.js` — just paste them as-is. (`SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` are provided to every Edge Function automatically — nothing to add for those.)
+
+If you ever need to replace these keys yourself with no tooling installed, generate a fresh pair at [vapidkeys.com](https://vapidkeys.com) and update both the 2 secrets here **and** the constant in `script-5.js` together — an old public key in the app talking to new private-key secrets will silently fail.
+
+### d) Wire the 2 webhooks
+**Database → Webhooks → Create a new webhook**, twice:
+
+| Table | Event | Type | Edge Function |
+|---|---|---|---|
+| `requests` | `INSERT` | Supabase Edge Function | `push-notify` |
+| `voucher_acks` | `INSERT` | Supabase Edge Function | `push-notify` |
+
+### e) Try it
+Log in on your phone, tap **Enable** on the "Enable Notifications" prompt that appears a couple seconds after you're in, then create (or have a partner acknowledge) a test voucher from another device — a notification should land within a few seconds.
+
+**iPhone note**: push notifications only work if the partner opened the app from an icon on their **Home Screen** (Safari → Share → *Add to Home Screen*), not from a normal Safari tab or bookmark — this is an Apple platform rule for every website, not something specific to this app. Android works either way (installed or just open in Chrome).
+
+---
+
 ## Partner names
 Edit the display names in `USER_MAP` at the top of [`assets/js/script-5.js`](assets/js/script-5.js) (`name` and `name_en`). If you change usernames or emails:
 1. Change them in `USER_MAP`.
@@ -50,4 +84,4 @@ Edit the display names in `USER_MAP` at the top of [`assets/js/script-5.js`](ass
 ## Notes
 - **Security is enforced at the database level**: even if someone tries to write outside the portal, the RLS policies block any write from an email other than yours.
 - The Hajj/Umrah **cancellation / refund** page has been hidden — the portal is now **payment vouchers only**.
-- Notifications (WhatsApp / email) are optional and disabled in this build.
+- Push notifications are set up per the section above; they're optional — the app works fully without them. `supabase/functions/notify/index.ts` (email/WhatsApp) is leftover from an unrelated project and isn't used.

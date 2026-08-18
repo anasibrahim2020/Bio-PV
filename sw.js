@@ -2,7 +2,7 @@
 // نسخة بسيطة: تخلّي التطبيق قابل للتثبيت، وتسرّع فتح الملفات الثابتة.
 // ملاحظة: البيانات (Supabase) دايمًا من النت — مابنعملهاش cache.
 
-const CACHE = 'bionutrition-pv-v36';
+const CACHE = 'bionutrition-pv-v40';
 const ASSETS = [
   './',
   './index.html',
@@ -23,6 +23,8 @@ const ASSETS = [
   './assets/images/icon-192.png',
   './assets/images/icon-512.png',
   './assets/images/icon-180.png',
+  './assets/images/badge-mono.png',
+  './assets/images/watermark_navy.png',
 ];
 
 // تثبيت: نخزّن ملفات الواجهة
@@ -55,5 +57,31 @@ self.addEventListener('fetch', (e) => {
       if (req.mode === 'navigate') return caches.match('./index.html');
       return Response.error();
     }))
+  );
+});
+
+// إشعارات Push: أيقونة كاملة الألوان في متن الإشعار، وأيقونة أبيض/شفاف
+// (badge) في شريط حالة الأندرويد — آيفون بيتجاهل الـ badge وبيعرض أيقونة
+// التطبيق نفسها دايمًا.
+self.addEventListener('push', (e) => {
+  let data = {};
+  try { data = e.data ? e.data.json() : {}; } catch (err) {}
+  e.waitUntil(self.registration.showNotification(data.title || 'BioNutrition PV', {
+    body: data.body || '',
+    icon: './assets/images/icon-192.png',
+    badge: './assets/images/badge-mono.png',
+    data: { url: data.url || './index.html' },
+    tag: data.tag,
+  }));
+});
+
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  const url = e.notification.data && e.notification.data.url ? e.notification.data.url : './index.html';
+  e.waitUntil(
+    clients.matchAll({ type: 'window' }).then((list) => {
+      const existing = list.find((c) => c.url.includes(self.location.origin));
+      return existing ? existing.focus() : clients.openWindow(url);
+    })
   );
 });

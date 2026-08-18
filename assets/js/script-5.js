@@ -22,6 +22,53 @@ const SUPABASE_KEY = 'sb_publishable_qoHYcMTfxJs6AGXPwBMmXw_vzLLQDzt';   // anon
 const SB_ON = !!(SUPABASE_URL && SUPABASE_KEY);
 const sb = SB_ON ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
+// 3) Push notifications — public key only (safe client-side, same trust level as SUPABASE_KEY above)
+const VAPID_PUBLIC_KEY = 'BACSmK7YzeoVimlqFhg7vEQe4-YvsqdyrUpF3DvWHE5psBSDGb7FPXJGxtPVaH1pIaR5t7b4YI-kwEjq4_MWd2M';
+
+function urlBase64ToUint8Array(base64String){
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g,'+').replace(/_/g,'/');
+  const raw = atob(base64);
+  return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
+}
+
+// Ask once per day at most — never on page load, only after the user is inside the app
+async function maybeOfferPushNotifications(){
+  if(!('Notification' in window) || !('serviceWorker' in navigator) || !VAPID_PUBLIC_KEY) return;
+  if(Notification.permission !== 'default') return;
+  const lastAsked = Number(localStorage.getItem('bnpv_push_asked_at') || 0);
+  if(Date.now() - lastAsked < 24*60*60*1000) return;
+  localStorage.setItem('bnpv_push_asked_at', String(Date.now()));
+
+  setTimeout(async () => {
+    const ok = await showConfirmDialog({
+      title: 'Enable Notifications',
+      message: 'Get notified instantly when a new voucher is created or acknowledged.',
+      confirmText: 'Enable',
+      cancelText: 'Not now',
+    });
+    if(!ok) return;
+    try{
+      const permission = await Notification.requestPermission();
+      if(permission !== 'granted') return;
+      const reg = await navigator.serviceWorker.ready;
+      const sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+      });
+      const json = sub.toJSON();
+      await sb.from('push_subscriptions').upsert({
+        endpoint: json.endpoint,
+        p256dh: json.keys.p256dh,
+        auth: json.keys.auth,
+        user_email: CURRENT.email,
+        role: CURRENT.role,
+        user_agent: navigator.userAgent,
+      }, { onConflict: 'endpoint' });
+    }catch(e){ console.error('Push subscribe failed', e); }
+  }, 1500);
+}
+
 function sanitizeFileName(name){
   return String(name||'').trim()
     .replace(/[^a-zA-Z0-9_.-]/g,'_')
@@ -313,6 +360,8 @@ function enterApp(){
   startArchiveAutoRefresh();
   // Notify the requester on portal open that their voucher was transferred
   notifyTransferredRequests();
+  // Offer push notifications (new vouchers / acknowledgements) — asked once, never on page load
+  maybeOfferPushNotifications();
 }
 
 // Notify the requester as soon as they open the portal that their voucher was transferred (transfer proof uploaded)
