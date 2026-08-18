@@ -1287,11 +1287,11 @@ function showConfirmDialog({ title, message, details=[], note='', confirmText='C
         @keyframes acdFade{from{opacity:0}to{opacity:1}}
         @keyframes acdPop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
         #app-confirm-overlay{animation:acdFade .18s ease both;}
-        #app-confirm-overlay .acd-card{width:min(460px,100%);background:#fff;border-radius:20px;box-shadow:0 1px 1px rgba(20,24,46,.04),0 18px 48px -12px rgba(20,24,46,.32),0 40px 80px -24px rgba(20,24,46,.22);overflow:hidden;font-family:'Cairo','Montserrat',sans-serif;animation:acdPop .26s cubic-bezier(.2,.8,.25,1) both;}
+        #app-confirm-overlay .acd-card{width:min(460px,100%);background:#fff;border-radius:20px;box-shadow:0 1px 1px rgba(20,24,46,.04),0 18px 48px -12px rgba(20,24,46,.32),0 40px 80px -24px rgba(20,24,46,.22);overflow:hidden;font-family:'Plus Jakarta Sans','Cairo','Montserrat',sans-serif;animation:acdPop .26s cubic-bezier(.2,.8,.25,1) both;}
         #app-confirm-overlay .acd-head{position:relative;padding:22px 24px 20px;background:linear-gradient(120deg,#08182E 0%,#1A2E5A 48%,#08182E 100%);color:#fff;}
         #app-confirm-overlay .acd-head::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,rgba(255,255,255,.0),rgba(255,255,255,.35),rgba(255,255,255,.0));}
         #app-confirm-overlay .acd-title{font-size:18px;font-weight:800;line-height:1.45;}
-        #app-confirm-overlay .acd-cap{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;opacity:.72;margin-top:3px;}
+        #app-confirm-overlay .acd-cap{font-family:'Plus Jakarta Sans','Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;opacity:.72;margin-top:3px;}
         #app-confirm-overlay .acd-body{padding:20px 24px 6px;}
         #app-confirm-overlay .acd-msg{font-size:14.5px;font-weight:600;color:#1B2233;line-height:1.9;white-space:pre-line;}
         #app-confirm-overlay .acd-details{margin-top:16px;border:1px solid #E8EEF5;border-radius:14px;background:#F7FAFD;overflow:hidden;}
@@ -1301,7 +1301,7 @@ function showConfirmDialog({ title, message, details=[], note='', confirmText='C
         #app-confirm-overlay .acd-row-value{font-size:13px;font-weight:800;color:#08182E;}
         #app-confirm-overlay .acd-note{margin-top:14px;color:#64748B;font-size:12px;line-height:1.75;}
         #app-confirm-overlay .acd-foot{display:flex;gap:10px;justify-content:flex-start;padding:18px 24px 22px;}
-        #app-confirm-overlay .acd-btn{border:none;border-radius:12px;padding:11px 24px;font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:800;cursor:pointer;transition:transform .12s ease,box-shadow .15s ease,background .15s ease;}
+        #app-confirm-overlay .acd-btn{border:none;border-radius:12px;padding:11px 24px;font-family:'Plus Jakarta Sans','Cairo',sans-serif;font-size:13.5px;font-weight:800;cursor:pointer;transition:transform .12s ease,box-shadow .15s ease,background .15s ease;}
         #app-confirm-overlay .acd-btn:active{transform:translateY(1px);}
         #app-confirm-overlay .acd-btn:focus-visible{outline:2px solid ${accent};outline-offset:2px;}
         #app-confirm-overlay .acd-confirm{background:${accent};color:#fff;box-shadow:0 10px 22px -6px ${accentSoft};}
@@ -1488,12 +1488,12 @@ function renderCommentsOverlay(i){
     <style>
       @keyframes cmtFade{from{opacity:0}to{opacity:1}}
       @keyframes cmtPop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
-      #app-comments-overlay{animation:cmtFade .18s ease both;font-family:'Cairo','Montserrat',sans-serif;}
+      #app-comments-overlay{animation:cmtFade .18s ease both;font-family:'Plus Jakarta Sans','Cairo','Montserrat',sans-serif;}
       #app-comments-overlay .cmt-card{width:min(520px,100%);max-height:88vh;display:flex;flex-direction:column;background:#fff;border-radius:20px;box-shadow:0 1px 1px rgba(20,24,46,.04),0 18px 48px -12px rgba(20,24,46,.32),0 40px 80px -24px rgba(20,24,46,.22);overflow:hidden;animation:cmtPop .26s cubic-bezier(.2,.8,.25,1) both;}
       #app-comments-overlay .cmt-head{position:relative;padding:20px 24px 18px;background:linear-gradient(120deg,#08182E 0%,#1A2E5A 48%,#08182E 100%);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;}
       #app-comments-overlay .cmt-head::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.35),rgba(255,255,255,0));}
       #app-comments-overlay .cmt-htitle{font-size:17px;font-weight:800;}
-      #app-comments-overlay .cmt-hcap{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.4px;opacity:.72;margin-top:2px;direction:ltr;}
+      #app-comments-overlay .cmt-hcap{font-family:'Plus Jakarta Sans','Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.4px;opacity:.72;margin-top:2px;direction:ltr;}
       #app-comments-overlay .cmt-x{background:rgba(255,255,255,.16);border:none;color:#fff;width:32px;height:32px;border-radius:10px;font-size:18px;cursor:pointer;line-height:1;transition:background .15s ease;}
       #app-comments-overlay .cmt-x:hover{background:rgba(255,255,255,.28);}
       #app-comments-overlay .cmt-body{padding:16px 20px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;background:#F7FAFD;}
@@ -1511,11 +1511,11 @@ function renderCommentsOverlay(i){
       #app-comments-overlay .cmt-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;}
       #app-comments-overlay .cmt-time{font-size:11px;color:#94A3B8;direction:ltr;}
       #app-comments-overlay .cmt-actions{display:flex;gap:6px;}
-      #app-comments-overlay .cmt-link{background:none;border:none;font-family:'Cairo',sans-serif;font-size:12px;font-weight:800;color:#1A2E5A;cursor:pointer;padding:3px 7px;border-radius:8px;}
+      #app-comments-overlay .cmt-link{background:none;border:none;font-family:'Plus Jakarta Sans','Cairo',sans-serif;font-size:12px;font-weight:800;color:#1A2E5A;cursor:pointer;padding:3px 7px;border-radius:8px;}
       #app-comments-overlay .cmt-link:hover{background:#EAF3F3;}
       #app-comments-overlay .cmt-link.danger{color:#E0526B;}
       #app-comments-overlay .cmt-link.danger:hover{background:#FCEBEF;}
-      #app-comments-overlay textarea{width:100%;box-sizing:border-box;border:1.5px solid #DCE4EE;border-radius:12px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13.5px;resize:vertical;outline:none;background:#fff;}
+      #app-comments-overlay textarea{width:100%;box-sizing:border-box;border:1.5px solid #DCE4EE;border-radius:12px;padding:10px 12px;font-family:'Plus Jakarta Sans','Cairo',sans-serif;font-size:13.5px;resize:vertical;outline:none;background:#fff;}
       #app-comments-overlay textarea:focus{border-color:#1A2E5A;box-shadow:0 0 0 3px rgba(44,139,142,.12);}
       #app-comments-overlay .cmt-add{border-top:1px solid #E8EEF5;padding:14px 20px 18px;background:#fff;display:flex;flex-direction:column;gap:10px;}
       #app-comments-overlay .cmt-vis-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;}
@@ -1523,7 +1523,7 @@ function renderCommentsOverlay(i){
       #app-comments-overlay .cmt-vis-opt{display:flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;color:#08182E;background:#F4F7FB;border:1.5px solid #E2E9F2;border-radius:10px;padding:6px 11px;cursor:pointer;}
       #app-comments-overlay .cmt-vis-opt:has(input:checked){border-color:#1A2E5A;background:#EAF6F5;color:#1F6F6B;}
       #app-comments-overlay .cmt-vis-opt input{accent-color:#1A2E5A;}
-      #app-comments-overlay .cmt-submit{align-self:flex-start;background:#1A2E5A;color:#fff;border:none;border-radius:12px;padding:10px 22px;font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:800;cursor:pointer;box-shadow:0 10px 22px -6px rgba(44,139,142,.28);transition:filter .15s ease;}
+      #app-comments-overlay .cmt-submit{align-self:flex-start;background:#1A2E5A;color:#fff;border:none;border-radius:12px;padding:10px 22px;font-family:'Plus Jakarta Sans','Cairo',sans-serif;font-size:13.5px;font-weight:800;cursor:pointer;box-shadow:0 10px 22px -6px rgba(44,139,142,.28);transition:filter .15s ease;}
       #app-comments-overlay .cmt-submit:hover{filter:brightness(1.06);}
       #app-comments-overlay .cmt-locked{border-top:1px solid #E8EEF5;padding:16px 20px;background:#fff;color:#64748B;font-size:12.5px;font-weight:700;text-align:center;}
     </style>
