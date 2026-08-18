@@ -2,12 +2,15 @@
 // نسخة بسيطة: تخلّي التطبيق قابل للتثبيت، وتسرّع فتح الملفات الثابتة.
 // ملاحظة: البيانات (Supabase) دايمًا من النت — مابنعملهاش cache.
 
-const CACHE = 'bionutrition-pv-v33';
+const CACHE = 'bionutrition-pv-v36';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './assets/css/styles.css',
+  './assets/fonts/font-3835919ff0bd.woff2',
+  './assets/fonts/font-0305c87c8230.woff2',
+  './assets/fonts/font-7b57f8d314ea.woff2',
   './assets/js/script-1.js',
   './assets/js/script-2.js',
   './assets/js/script-3.js',
@@ -47,6 +50,10 @@ self.addEventListener('fetch', (e) => {
       const copy = res.clone();
       caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
       return res;
-    }).catch(() => caches.match('./index.html')))
+    }).catch(() => {
+      // fallback الصفحة يخصّ التنقّل بس — لو رجّعناه لطلب خط/صورة الملف بيتقرا HTML ويبوظ
+      if (req.mode === 'navigate') return caches.match('./index.html');
+      return Response.error();
+    }))
   );
 });

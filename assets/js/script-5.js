@@ -1457,7 +1457,7 @@ function renderCommentsOverlay(i){
       #app-comments-overlay .cmt-vis-badge{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap;}
       #app-comments-overlay .cmt-all{background:#EAF3FF;color:#2563EB;}
       #app-comments-overlay .cmt-mgmt{background:#F3EEFF;color:#6B46C1;}
-      #app-comments-overlay .cmt-staff{background:#E7F7F0;color:#2A5DA8;}
+      #app-comments-overlay .cmt-staff{background:#E7F7F0;color:var(--green);}
       #app-comments-overlay .cmt-text{font-size:13.5px;font-weight:600;color:#1B2233;line-height:1.85;white-space:pre-wrap;word-break:break-word;}
       #app-comments-overlay .cmt-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;}
       #app-comments-overlay .cmt-time{font-size:11px;color:#94A3B8;direction:ltr;}
