@@ -2,7 +2,7 @@
 // نسخة بسيطة: تخلّي التطبيق قابل للتثبيت، وتسرّع فتح الملفات الثابتة.
 // ملاحظة: البيانات (Supabase) دايمًا من النت — مابنعملهاش cache.
 
-const CACHE = 'bionutrition-pv-v46';
+const CACHE = 'bionutrition-pv-v47';
 const ASSETS = [
   './',
   './index.html',
@@ -21,9 +21,9 @@ const ASSETS = [
   './assets/images/bn-emblem.png',
   './assets/images/stamp.png',
   './assets/images/signature.png',
-  './assets/images/icon-192.png',
-  './assets/images/icon-512.png',
-  './assets/images/icon-180.png',
+  './assets/images/pv-icon-192.png',
+  './assets/images/pv-icon-512.png',
+  './assets/images/pv-icon-180.png',
   './assets/images/favicon-64.png',
   './assets/images/badge-mono.png',
   './assets/images/watermark_navy.png',
@@ -70,7 +70,7 @@ self.addEventListener('push', (e) => {
   try { data = e.data ? e.data.json() : {}; } catch (err) {}
   e.waitUntil(self.registration.showNotification(data.title || 'BioNutrition PV', {
     body: data.body || '',
-    icon: './assets/images/icon-192.png',
+    icon: './assets/images/pv-icon-192.png',
     badge: './assets/images/badge-mono.png',
     data: { url: data.url || './index.html' },
     tag: data.tag,
