@@ -14,7 +14,7 @@ table.arc tbody tr.arc-transferred td:first-child{box-shadow:inset 4px 0 0 var(-
    Every rule below overrides the base stylesheet above. Grouped by section.
    ══════════════════════════════════════════════════════════════════════ */
 
-/* ---- 1. English / LTR base + hide legacy Zamzam pieces ---- */
+/* ---- 1. English / LTR base + hide legacy unused pieces ---- */
 .wa{display:none !important;}                              /* hide Arabic amount-in-words */
 .amt-words .we{display:block;}
 body[dir], html[lang="en"] body{direction:ltr;}
@@ -273,4 +273,191 @@ table.arc td.arc-amount{font-weight:800;color:var(--indigo);}
   #doc-disb .inv-table th{font-size:9.5px !important;padding:7px 4px !important;}
   #doc-disb .inv-table td{padding:6px 3px !important;}
   #doc-disb .inv-table input{padding-left:2px !important;padding-right:2px !important;}
+}
+
+/* ================= 21. Mobile / tablet chrome — SCREEN ONLY =================
+   الطباعة ليها البلوك بتاعها فوق ومش بتتأثر بأي حاجة هنا إطلاقًا.
+   الهدف: الهيدر والتبويبات والأزرار يتكيّفوا مع أي مقاس من غير ما الكلام يتقص أو يلف وحش. */
+
+/* ── الهيدر: يقصر بدل ما يلف على سطرين ── */
+@media screen{
+  .topbar{gap:10px;}
+  .tb-left{flex:1 1 auto;min-width:0;}                 /* min-width:0 = يسمح للعنصر يصغّر جوه flex */
+  .tb-title{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .tb-title small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .tb-right{flex:0 0 auto;min-width:0;}
+  .tb-user{min-width:0;}
+  .tb-user b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .tb-logout{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;flex-shrink:0;}
+  .tb-logout svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+}
+
+@media screen and (max-width:860px){
+  .tb-left{gap:12px;}
+  .tb-right{gap:10px;}
+  .tb-user{max-width:120px;}
+}
+
+/* تحت 600px: نشيل الدور ونسيب الاسم بس */
+@media screen and (max-width:600px){
+  .tb-user{max-width:96px;}
+  .tb-user .role,#tb-role{display:none !important;}
+  .tb-user b{font-size:12px !important;}
+}
+
+/* تحت 430px: الاسم يختفي والخروج يبقى أيقونة بس — الهيدر يفضل نضيف */
+@media screen and (max-width:430px){
+  .tb-user{display:none !important;}
+  .tb-logout-txt{display:none;}
+  .tb-logout{padding:8px !important;width:36px;height:36px;justify-content:center;gap:0;}
+}
+
+/* ── التبويبات: يفضلوا سطر واحد مقسوم بالتساوي ── */
+@media screen and (max-width:640px){
+  .nav{flex-wrap:nowrap !important;gap:8px !important;}
+  .nav-btn{flex:1 1 0;min-width:0;justify-content:center;white-space:nowrap;
+           padding:10px 8px !important;font-size:clamp(11.5px,3.2vw,13.5px) !important;}
+  .nav-btn svg{flex-shrink:0;}
+}
+
+/* ── أزرار المستند: جريد متساوي بدل اللف العشوائي ── */
+@media screen and (max-width:820px){
+  .doc-actions{display:grid !important;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px !important;
+               justify-content:stretch !important;padding:0 10px;}
+  .doc-actions .btn{width:100%;justify-content:center;padding:12px 10px;white-space:nowrap;
+                    font-size:clamp(12px,3.3vw,13px);min-width:0;}
+  .doc-actions .btn svg{flex-shrink:0;}
+}
+@media screen and (max-width:380px){
+  .doc-actions .btn{padding:11px 6px;gap:5px;}
+}
+
+/* ── عنوان المستند: حجم مرن عشان يفضل سطر واحد ── */
+@media screen and (max-width:640px){
+  .doc-hd{padding:14px 16px 15px;gap:10px;}
+  .doc-hd-txt h1{font-size:clamp(15px,4.6vw,21px);line-height:1.2;}
+  .doc-hd .logo{width:52px !important;height:52px !important;flex-shrink:0;}
+}
+
+/* ── شبكة أمان: أي عنصر flex جوّه المستند يقدر يصغّر بدل ما يفيض ── */
+@media screen and (max-width:820px){
+  .dm-item,.f,.amt-row,.sig-block{min-width:0;}
+  .dm-item input,.dm-item select,.f input,.f select{min-width:0;}
+  .amt-words .we{overflow-wrap:anywhere;}
+}
+
+/* ── السجل على الموبايل: اسم المورّد الطويل يلف بدل ما يتقص، والتبويبات تفضل سطر واحد ── */
+@media screen and (max-width:900px){
+  /* خلية المورّد: الليبل فوق والقيمة تحته بعرض كامل عشان الاسم الطويل يلف طبيعي */
+  table.arc td.arc-ref{flex-direction:column !important;align-items:flex-start !important;
+                       justify-content:center !important;gap:4px;text-align:left !important;
+                       padding-inline-start:12px !important;padding-inline-end:12px !important;}
+  table.arc td.arc-ref .arc-ref-name,
+  table.arc td.arc-ref .arc-ref-inv{text-align:left !important;width:100%;min-width:0;
+                                    white-space:normal;overflow-wrap:anywhere;}
+  /* أي قيمة نصية طويلة في باقي الخلايا تلف كمان */
+  table.arc td{min-width:0;}
+  table.arc td > *{min-width:0;}
+}
+
+@media screen and (max-width:640px){
+  /* التبويبات: تمرير أفقي ناعم بدل ما تنط لسطر تاني */
+  .arc-tabs{flex-wrap:nowrap !important;overflow-x:auto;-webkit-overflow-scrolling:touch;
+            padding:0 12px !important;scrollbar-width:none;}
+  .arc-tabs::-webkit-scrollbar{display:none;}
+  .arc-tab{flex:0 0 auto;white-space:nowrap;padding:12px 12px !important;font-size:12.5px !important;}
+  /* البحث والتاريخ: كل واحد سطر كامل */
+  .arc-controls{padding:12px !important;gap:8px !important;}
+  .arc-controls > *{flex:1 1 100% !important;min-width:0;}
+  /* هيدر السجل */
+  .arc-hd{gap:10px;}
+  .arc-hd h2{font-size:clamp(16px,4.6vw,20px);}
+}
+
+/* ================= 22. جدول الفواتير ككروت على الموبايل — SCREEN ONLY =================
+   3 أعمدة على شاشة 390px بتخنق اسم المورّد (كان بيبان 119px من 288px محتاجة).
+   على الموبايل بيتحول لكارت لكل فاتورة: الليبل جنب القيمة والاسم بعرض كامل.
+   الطباعة مبتشوفش أي حاجة من ده — بتفضل جدول A4 عادي. */
+@media screen and (max-width:640px){
+  #doc-disb .inv-table thead{display:none !important;}
+  #doc-disb .inv-table,
+  #doc-disb .inv-table tbody,
+  #doc-disb .inv-table tfoot{display:block !important;width:100% !important;}
+  #doc-disb .inv-table tr{display:block !important;width:100% !important;}
+  #doc-disb .inv-table td{display:flex !important;align-items:center;gap:10px;
+                          width:100% !important;box-sizing:border-box;text-align:left !important;
+                          direction:ltr !important;border:none !important;
+                          border-bottom:1px solid var(--bg) !important;padding:9px 12px !important;}
+
+  /* الكارت = صف البيانات + صف السبب ملزوقين */
+  #doc-disb .inv-table tr.item-row{background:#fff;border:1px solid var(--border) !important;
+                                   border-radius:12px 12px 0 0;margin-top:12px;}
+  #doc-disb .inv-table tr.reason-row{background:var(--tint);border:1px solid var(--border) !important;
+                                     border-top:none !important;border-radius:0 0 12px 12px;margin-bottom:6px;}
+
+  /* الليبل قدام كل قيمة */
+  #doc-disb .inv-table tr.item-row td::before{flex:0 0 84px;font-size:9.5px;font-weight:800;
+                                              letter-spacing:.5px;text-transform:uppercase;
+                                              color:var(--gray);text-align:left;}
+  #doc-disb .inv-table tr.item-row td:nth-child(1)::before{content:'Supplier';}
+  #doc-disb .inv-table tr.item-row td:nth-child(2)::before{content:'Invoice No.';}
+  #doc-disb .inv-table tr.item-row td:nth-child(3)::before{content:'Amount';}
+  #doc-disb .inv-table tr.item-row td input{flex:1 1 auto;min-width:0;width:auto !important;
+                                            text-align:left !important;}
+  #doc-disb .inv-table tr.item-row td.amt-cell input{text-align:right !important;font-weight:700;}
+
+  /* خانة الحذف: زرار واضح بدل × صغيرة ملزوقة في الحقول */
+  #doc-disb .inv-table tr.item-row td.no-print{justify-content:flex-end;border-bottom:none !important;
+                                               padding:6px 10px 10px !important;}
+  #doc-disb .inv-table tr.item-row td.no-print::before{display:none;}
+
+  /* صف السبب */
+  #doc-disb .inv-table tr.reason-row td.reason-cell{border-bottom:none !important;}
+  #doc-disb .inv-table tr.reason-row td.no-print{display:none !important;}
+  #doc-disb .inv-table tr.reason-row input{flex:1 1 auto;min-width:0;}
+
+  /* الإجمالي كشريط مستقل */
+  #doc-disb .inv-table tfoot tr.inv-total-row{display:flex !important;align-items:center;
+      justify-content:space-between;gap:10px;background:var(--tint-g) !important;
+      border:1px solid var(--border) !important;border-radius:12px;margin-top:10px;}
+  #doc-disb .inv-table tfoot td{width:auto !important;border-bottom:none !important;padding:11px 14px !important;}
+  #doc-disb .inv-table tfoot td.no-print{display:none !important;}
+}
+
+/* ── مساحات لمس مريحة (الحد الأدنى المتعارف عليه 44px) ── */
+@media screen and (hover:none) and (pointer:coarse){
+  .nav-btn{min-height:44px;}
+  .tb-logout{min-width:44px;min-height:44px;}
+  .add-row-btn{min-height:44px;}
+  .del-row{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;
+           border:1px solid var(--border);background:#fff;font-size:15px;}
+  .arc-mini{min-height:38px;}
+  .arc-tab{min-height:44px;}
+}
+@media screen and (hover:none) and (pointer:coarse) and (max-width:430px){
+  .tb-logout{width:44px;height:44px;}
+}
+
+/* ── ضبط الكارت: اسم المورّد بعرض كامل (الأسماء طويلة)، ورقم الفاتورة والمبلغ جنب بعض ── */
+@media screen and (max-width:640px){
+  /* المورّد: الليبل فوق والحقل تحته بعرض الكارت كله — مفيش قص مهما طال الاسم */
+  #doc-disb .inv-table tr.item-row td:nth-child(1){flex-direction:column !important;
+      align-items:stretch !important;gap:4px;padding-top:11px !important;}
+  #doc-disb .inv-table tr.item-row td:nth-child(1)::before{flex:0 0 auto;}
+  #doc-disb .inv-table tr.item-row td:nth-child(1) input{width:100% !important;}
+
+  /* رقم الفاتورة والمبلغ: ليبل جنب القيمة (قيم قصيرة، مفيش داعي لسطرين) */
+  #doc-disb .inv-table tr.item-row td:nth-child(2)::before,
+  #doc-disb .inv-table tr.item-row td:nth-child(3)::before{flex:0 0 78px;}
+
+  /* زرار الحذف: مدمج مع صف المبلغ بدل ما ياخد مساحة فاضية لوحده */
+  #doc-disb .inv-table tr.item-row td.no-print{padding:0 10px 10px !important;margin-top:-4px;}
+  #doc-disb .del-row{width:auto;padding:0 14px;gap:6px;font-size:13px;font-weight:700;
+                     color:var(--red);border-color:#F0B7C1;}
+  #doc-disb .del-row::after{content:'Remove';font-size:11.5px;font-weight:700;letter-spacing:.3px;}
+}
+
+/* أزرار المستند الأربعة كانت 41px — نكملها للحد الأدنى 44 على أجهزة اللمس */
+@media screen and (hover:none) and (pointer:coarse){
+  .doc-actions .btn{min-height:44px;}
 }

@@ -23,7 +23,7 @@ const SB_ON = !!(SUPABASE_URL && SUPABASE_KEY);
 const sb = SB_ON ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 // 3) Push notifications — public key only (safe client-side, same trust level as SUPABASE_KEY above)
-const VAPID_PUBLIC_KEY = 'BACSmK7YzeoVimlqFhg7vEQe4-YvsqdyrUpF3DvWHE5psBSDGb7FPXJGxtPVaH1pIaR5t7b4YI-kwEjq4_MWd2M';
+const VAPID_PUBLIC_KEY = 'BAbKXGr5PJk57lk-AkApqfsODVUGYK1irDs1ueYtXxEC-mHZmVkdRuGl6I5_IC6yt_F4iwAAnG4ydbU0zeifMII';
 
 function urlBase64ToUint8Array(base64String){
   const padding = '='.repeat((4 - base64String.length % 4) % 4);

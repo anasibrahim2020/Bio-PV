@@ -50,15 +50,22 @@ In **SQL Editor → New query**, paste [`supabase/push-notifications.sql`](supab
 **Edge Functions → Create a new function** → name it `push-notify` → paste the contents of [`supabase/functions/push-notify/index.ts`](supabase/functions/push-notify/index.ts) → **Deploy**.
 
 ### c) Add 3 secrets
-**Edge Functions → Secrets** → add:
+**Edge Functions → Secrets** → add these three:
+
 ```
-VAPID_PUBLIC_KEY  = BACSmK7YzeoVimlqFhg7vEQe4-YvsqdyrUpF3DvWHE5psBSDGb7FPXJGxtPVaH1pIaR5t7b4YI-kwEjq4_MWd2M
-VAPID_PRIVATE_KEY = Xmue44HanGIjbj7SHkuukW2bYFMiiXefIWNyIWE-PDU
+VAPID_PUBLIC_KEY  = BAbKXGr5PJk57lk-AkApqfsODVUGYK1irDs1ueYtXxEC-mHZmVkdRuGl6I5_IC6yt_F4iwAAnG4ydbU0zeifMII
+VAPID_PRIVATE_KEY = <paste the private key — sent to you separately, never store it in this repo>
 VAPID_SUBJECT     = mailto:admin@bionutritionmedical.com
 ```
-These two keys are already generated and matched to the `VAPID_PUBLIC_KEY` constant in `script-5.js` — just paste them as-is. (`SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` are provided to every Edge Function automatically — nothing to add for those.)
 
-If you ever need to replace these keys yourself with no tooling installed, generate a fresh pair at [vapidkeys.com](https://vapidkeys.com) and update both the 2 secrets here **and** the constant in `script-5.js` together — an old public key in the app talking to new private-key secrets will silently fail.
+> **Why the private key isn't written here:** this repository is public. The public key is
+> meant to be public (it also lives in `script-5.js`), but the private key must exist only
+> inside Supabase's Edge Function secrets. Anyone holding it could send push notifications
+> that appear to come from this app.
+
+If you ever need a fresh pair, generate one at [vapidkeys.com](https://vapidkeys.com) and update
+**both** the secret here and the `VAPID_PUBLIC_KEY` constant in `assets/js/script-5.js` together —
+a mismatched pair fails silently.
 
 ### d) Wire the 2 webhooks
 **Database → Webhooks → Create a new webhook**, twice:
@@ -84,4 +91,4 @@ Edit the display names in `USER_MAP` at the top of [`assets/js/script-5.js`](ass
 ## Notes
 - **Security is enforced at the database level**: even if someone tries to write outside the portal, the RLS policies block any write from an email other than yours.
 - The Hajj/Umrah **cancellation / refund** page has been hidden — the portal is now **payment vouchers only**.
-- Push notifications are set up per the section above; they're optional — the app works fully without them. `supabase/functions/notify/index.ts` (email/WhatsApp) is leftover from an unrelated project and isn't used.
+- Push notifications are set up per the section above; they're optional — the app works fully without them.
