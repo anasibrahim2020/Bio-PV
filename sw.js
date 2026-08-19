@@ -2,12 +2,12 @@
 // نسخة بسيطة: تخلّي التطبيق قابل للتثبيت، وتسرّع فتح الملفات الثابتة.
 // ملاحظة: البيانات (Supabase) دايمًا من النت — مابنعملهاش cache.
 
-const CACHE = 'bionutrition-pv-v62';
+const CACHE = 'bionutrition-pv-v65';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './assets/css/styles.css',
+  './assets/css/styles.css?v=65',
   './assets/fonts/plus-jakarta-sans-var.woff2',
   './assets/fonts/font-3835919ff0bd.woff2',
   './assets/fonts/font-0305c87c8230.woff2',
@@ -16,7 +16,7 @@ const ASSETS = [
   './assets/js/script-2.js',
   './assets/js/script-3.js',
   './assets/js/script-4.js',
-  './assets/js/script-5.js',
+  './assets/js/script-5.js?v=65',
   './assets/images/bn-logo.png',
   './assets/images/bn-emblem.png',
   './assets/images/stamp.png',

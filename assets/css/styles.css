@@ -645,3 +645,140 @@ table.arc th{letter-spacing:.6px;}
   .login-field input{text-align:left;}
   .login-field label{display:block;margin-bottom:6px;}
 }
+
+/* ═══════════════ 24. APP CHROME DESIGN SYSTEM — SCREEN ONLY ═══════════════
+   Header, profile, navigation, toolbar and ledger controls.
+   Deliberately scoped to @media screen and to chrome selectors only:
+   #doc-disb internals are never touched, so the printed voucher is unchanged.
+
+   Principles applied throughout:
+     • borders belong to primary + input surfaces; secondary uses tint;
+       tertiary uses bare icons with hover-only chrome
+     • status is tinted and borderless; actions get containers
+     • one control height, one icon size, one radius scale        */
+@media screen{
+
+  /* ---- chrome tokens ---- */
+  :root{
+    --ctl-h:32px;          /* ledger control height  */
+    --ctl-h-lg:40px;       /* toolbar button height  */
+    --icon:16px;           /* single icon size       */
+    --chrome-gap:10px;
+  }
+
+  /* ══ 1. HEADER · PROFILE ══════════════════════════════════════════════ */
+  .tb-right{gap:14px;}
+  .tb-profile{display:flex;align-items:center;gap:10px;min-width:0;}
+
+  /* initials avatar — balances the logo circle on the left */
+  .tb-avatar{flex:0 0 auto;width:36px;height:36px;border-radius:var(--r-full);
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+    color:#fff;font-size:12.5px;font-weight:700;letter-spacing:.4px;
+    font-family:'Plus Jakarta Sans',-apple-system,sans-serif;user-select:none;}
+
+  /* identity now outranks the logout action */
+  .tb-user{max-width:170px;line-height:1.25;}
+  .tb-user b{font-size:13px;font-weight:600;color:#fff;letter-spacing:-.1px;}
+  .tb-user .role,#tb-role{font-size:11px;font-weight:500;color:rgba(255,255,255,.62);}
+
+  /* logout demoted to a quiet icon-only ghost; chrome appears on hover */
+  .tb-logout{width:36px;height:36px;min-width:36px;min-height:36px;padding:0;gap:0;
+    background:transparent;border:1px solid transparent;border-radius:var(--r-md);
+    color:rgba(255,255,255,.70);justify-content:center;}
+  .tb-logout .tb-logout-txt{display:none;}
+  .tb-logout svg{width:var(--icon);height:var(--icon);}
+  .tb-logout:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.24);color:#fff;transform:none;}
+
+  /* ══ 2. NAVIGATION · underline tabs (was a heavy filled pill) ═════════ */
+  .nav{padding:0 24px;gap:4px;height:48px;align-items:stretch;}
+  .nav-btn{position:relative;background:transparent;border:none;border-radius:0;
+    padding:0 14px;height:100%;font-size:13.5px;font-weight:600;color:var(--gray);gap:8px;}
+  .nav-btn svg{width:var(--icon);height:var(--icon);opacity:.75;}
+  .nav-btn::after{content:'';position:absolute;left:10px;right:10px;bottom:0;height:2px;
+    border-radius:2px 2px 0 0;background:transparent;transition:background var(--dur) var(--ease);}
+  .nav-btn:hover:not(.on){background:transparent;color:var(--teal);}
+  .nav-btn:hover:not(.on)::after{background:var(--border);}
+  .nav-btn.on,.nav-btn.archive.on{background:transparent;color:var(--indigo);font-weight:700;}
+  .nav-btn.archive.on::after{background:var(--indigo);}
+  .nav-btn.on svg{opacity:1;}
+  .nav-btn.on::after{background:var(--indigo);}
+  .nav-btn:focus-visible{outline-offset:-2px;border-radius:var(--r-sm);}
+
+  /* ══ 3. TOOLBAR · three explicit tiers ═══════════════════════════════ */
+  .doc-actions{gap:8px;margin-bottom:12px;}                 /* sits closer to the document */
+  .doc-actions .btn{height:var(--ctl-h-lg);padding:0 18px;font-size:13px;gap:8px;}
+  .doc-actions .btn svg{width:var(--icon);height:var(--icon);}
+
+  /* primary — the one action the eye should land on */
+  .btn-primary{font-weight:700;padding:0 22px;}
+
+  /* distinctive but no longer outranking primary: gold as accent, not fill */
+  .btn-sign{background:#FBF6E6;color:#8A6D1E;border:1.5px solid #E6CF86;
+    box-shadow:var(--sh-sm);font-weight:700;}
+  .btn-sign:hover{background:#F7EFD6;border-color:var(--gold);color:#6E5616;
+    box-shadow:var(--sh-md);}
+  .btn-sign svg{opacity:.9;}
+
+  /* secondary */
+  .btn-outline{border-width:1.5px;font-weight:600;box-shadow:none;}
+  .btn-outline:hover{background:var(--tint);box-shadow:var(--sh-sm);}
+
+  /* tertiary — destructive, so it stays quiet until intent is shown */
+  .btn-clear{background:transparent;border:1px solid transparent;color:var(--gray);
+    box-shadow:none;font-weight:600;}
+  .btn-clear:hover{background:var(--stamp-red-tint);border-color:#F0B7C1;
+    color:var(--stamp-red);box-shadow:none;}
+
+  /* ══ 4. LEDGER CONTROLS · borderless by default ══════════════════════ */
+  .arc-mini{height:var(--ctl-h);min-height:var(--ctl-h);padding:0 10px;
+    border:1px solid transparent;background:transparent;color:var(--gray);
+    border-radius:var(--r-sm);font-size:11.5px;font-weight:600;box-shadow:none;gap:6px;}
+  .arc-mini svg{width:var(--icon);height:var(--icon);}
+  .arc-mini:hover{background:var(--tint);border-color:var(--border);color:var(--indigo);
+    box-shadow:none;transform:none;}
+  .arc-mini.icon-only{width:var(--ctl-h);height:var(--ctl-h);min-width:var(--ctl-h);padding:0;}
+  .arc-mini b{font-weight:700;color:var(--indigo);}
+
+  /* attachments/comments counters: plain, not pill-shaped chrome */
+  .arc-file-pill{min-width:auto;height:var(--ctl-h);padding:0 10px;
+    border-radius:var(--r-sm);border-color:transparent;background:transparent;color:var(--gray);}
+  .arc-file-pill:hover{background:var(--tint);border-color:var(--border);}
+
+  /* transfer proof present -> green accent, still an action, no heavy border */
+  .arc-mini.transferred{color:var(--green);background:var(--tint-g);border-color:transparent;}
+  .arc-mini.transferred:hover{background:#DCEFE6;border-color:#BFE3D6;color:var(--green);}
+
+  /* three-dot menu: least important control, quietest treatment */
+  .arc-menu-btn{border-radius:var(--r-full);color:var(--gray);}
+  .arc-menu-btn:hover{background:var(--tint);border-color:var(--border);}
+
+  /* ══ 5. STATUS vs ACTION — statuses are tinted, borderless, non-clickable ══ */
+  .ack-badge{display:inline-flex;align-items:center;justify-content:center;gap:5px;
+    height:24px;padding:0 10px;border:none;border-radius:var(--r-full);
+    font-size:11.5px;font-weight:700;letter-spacing:.2px;
+    font-variant-numeric:tabular-nums;box-shadow:none;}
+  .ack-badge.ack-full{background:#FBF6E6 !important;color:#8A6D1E !important;box-shadow:none !important;}
+  .ack-badge.ack-partial{background:var(--tint);color:var(--gray);}
+  .ack-badge.ack-none{background:var(--tint);color:#94A3B8;}
+
+  /* acknowledge action stays a real button, sized like its neighbours */
+  .arc-ack-btn{height:var(--ctl-h);padding:0 12px;border-radius:var(--r-sm);
+    border:1px solid var(--border);background:#fff;color:var(--teal);
+    font-size:11.5px;font-weight:600;}
+  .arc-ack-btn:hover{background:var(--tint);border-color:var(--teal);}
+
+  /* ══ 6. LEDGER PANEL · lighter supporting chrome ═════════════════════ */
+  .arc-refresh-btn{height:34px;border-width:1px;font-weight:600;font-size:12px;}
+  .arc-tab{font-weight:600;}
+  .arc-controls input,.arc-controls select{height:38px;}
+  table.arc td{vertical-align:middle;}
+  .arc-act{justify-content:center;}
+}
+
+/* touch devices keep the 44px minimum — the 36px ghost size is pointer-only */
+@media screen and (hover:none) and (pointer:coarse){
+  .tb-logout{width:44px;height:44px;min-width:44px;min-height:44px;}
+  .arc-mini{min-height:40px;}
+  .arc-mini.icon-only{width:40px;height:40px;min-width:40px;}
+}

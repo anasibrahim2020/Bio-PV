@@ -331,8 +331,15 @@ async function doLogout(){
 function enterApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='block';
-  document.getElementById('tb-name').textContent = CURRENT.name_en || CURRENT.name;
+  const _dispName = CURRENT.name_en || CURRENT.name;
+  document.getElementById('tb-name').textContent = _dispName;
   document.getElementById('tb-role').textContent = CURRENT.dept_en || CURRENT.dept || '';
+  // avatar initials — first letter of the first two words ("Anas Ibrahim" -> "AI")
+  const _av = document.getElementById('tb-avatar');
+  if(_av){
+    _av.textContent = String(_dispName||'').trim().split(/\s+/).slice(0,2)
+      .map(w=>w.charAt(0)).join('').toUpperCase() || '—';
+  }
   // Name and department are auto-filled based on the account
   document.getElementById('d-name').value = CURRENT.name;
   document.getElementById('d-dept').value = CURRENT.dept || (CURRENT.role==='accountant'?'Accounts Dept.':'Sales Dept.');
