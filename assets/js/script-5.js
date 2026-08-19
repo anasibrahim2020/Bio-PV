@@ -1272,7 +1272,7 @@ function showConfirmDialog({ title, message, details=[], note='', confirmText='C
     if(old) old.remove();
     const overlay = document.createElement('div');
     overlay.id = 'app-confirm-overlay';
-    overlay.dir = 'rtl';
+    overlay.dir = 'ltr';
     overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(15,27,43,.55);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);';
     const accent = danger ? 'var(--red)' : 'var(--teal)';
     const accentSoft = danger ? 'rgba(224,82,107,.28)' : 'rgba(21,36,56,.28)';
