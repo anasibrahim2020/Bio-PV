@@ -782,3 +782,22 @@ table.arc th{letter-spacing:.6px;}
   .arc-mini{min-height:40px;}
   .arc-mini.icon-only{width:40px;height:40px;min-width:40px;}
 }
+
+/* ═══════ 25. FINAL MICRO-ADJUSTMENTS — SCREEN ONLY ═══════
+   Sub-pixel/consistency fixes only; no design changes.
+   The printable voucher is deliberately excluded throughout. */
+@media screen{
+  /* Clear had a 1px border vs 1.5px on its siblings — the edge shifted on hover */
+  .btn-clear{border-width:1.5px;}
+
+  /* ledger amounts: tabular figures so decimals line up down the column
+     (scoped to the ledger — the printed voucher is untouched) */
+  .arc-amount{font-variant-numeric:tabular-nums;}
+
+  /* active ledger sub-tab now matches the main nav's active weight (was 600 vs 700) */
+  .arc-tab.on{font-weight:700;}
+
+  /* control heights snapped onto the 32/36/40 scale (were 34 and 38) */
+  .arc-refresh-btn{height:36px;}
+  .arc-controls input,.arc-controls select{height:40px;}
+}
