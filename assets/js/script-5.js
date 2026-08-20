@@ -1294,11 +1294,11 @@ function showConfirmDialog({ title, message, details=[], note='', confirmText='C
         @keyframes acdFade{from{opacity:0}to{opacity:1}}
         @keyframes acdPop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
         #app-confirm-overlay{animation:acdFade .18s ease both;}
-        #app-confirm-overlay .acd-card{width:min(460px,100%);background:#fff;border-radius:20px;box-shadow:0 1px 1px rgba(15,27,43,.04),0 18px 48px -12px rgba(15,27,43,.32),0 40px 80px -24px rgba(15,27,43,.22);overflow:hidden;font-family:'Plus Jakarta Sans','IBM Plex Sans Arabic','Montserrat',sans-serif;animation:acdPop .26s cubic-bezier(.2,.8,.25,1) both;}
+        #app-confirm-overlay .acd-card{width:min(460px,100%);background:#fff;border-radius:20px;box-shadow:0 1px 1px rgba(15,27,43,.04),0 18px 48px -12px rgba(15,27,43,.32),0 40px 80px -24px rgba(15,27,43,.22);overflow:hidden;font-family:'Plus Jakarta Sans','IBM Plex Sans Arabic',sans-serif;animation:acdPop .26s cubic-bezier(.2,.8,.25,1) both;}
         #app-confirm-overlay .acd-head{position:relative;padding:22px 24px 20px;background:linear-gradient(120deg,var(--indigo) 0%,var(--teal) 48%,var(--indigo) 100%);color:#fff;}
         #app-confirm-overlay .acd-head::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,rgba(255,255,255,.0),rgba(255,255,255,.35),rgba(255,255,255,.0));}
         #app-confirm-overlay .acd-title{font-size:18px;font-weight:800;line-height:1.45;}
-        #app-confirm-overlay .acd-cap{font-family:'Plus Jakarta Sans','Montserrat','IBM Plex Sans Arabic',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;opacity:.72;margin-top:3px;}
+        #app-confirm-overlay .acd-cap{font-family:'Plus Jakarta Sans','IBM Plex Sans Arabic',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;opacity:.72;margin-top:3px;}
         #app-confirm-overlay .acd-body{padding:20px 24px 6px;}
         #app-confirm-overlay .acd-msg{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.9;white-space:pre-line;}
         #app-confirm-overlay .acd-details{margin-top:16px;border:1px solid var(--bg);border-radius:14px;background:var(--tint);overflow:hidden;}
@@ -1495,12 +1495,12 @@ function renderCommentsOverlay(i){
     <style>
       @keyframes cmtFade{from{opacity:0}to{opacity:1}}
       @keyframes cmtPop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
-      #app-comments-overlay{animation:cmtFade .18s ease both;font-family:'Plus Jakarta Sans','IBM Plex Sans Arabic','Montserrat',sans-serif;}
+      #app-comments-overlay{animation:cmtFade .18s ease both;font-family:'Plus Jakarta Sans','IBM Plex Sans Arabic',sans-serif;}
       #app-comments-overlay .cmt-card{width:min(520px,100%);max-height:88vh;display:flex;flex-direction:column;background:#fff;border-radius:20px;box-shadow:0 1px 1px rgba(15,27,43,.04),0 18px 48px -12px rgba(15,27,43,.32),0 40px 80px -24px rgba(15,27,43,.22);overflow:hidden;animation:cmtPop .26s cubic-bezier(.2,.8,.25,1) both;}
       #app-comments-overlay .cmt-head{position:relative;padding:20px 24px 18px;background:linear-gradient(120deg,var(--indigo) 0%,var(--teal) 48%,var(--indigo) 100%);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;}
       #app-comments-overlay .cmt-head::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.35),rgba(255,255,255,0));}
       #app-comments-overlay .cmt-htitle{font-size:17px;font-weight:800;}
-      #app-comments-overlay .cmt-hcap{font-family:'Plus Jakarta Sans','Montserrat','IBM Plex Sans Arabic',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.4px;opacity:.72;margin-top:2px;direction:ltr;}
+      #app-comments-overlay .cmt-hcap{font-family:'Plus Jakarta Sans','IBM Plex Sans Arabic',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.4px;opacity:.72;margin-top:2px;direction:ltr;}
       #app-comments-overlay .cmt-x{background:rgba(255,255,255,.16);border:none;color:#fff;width:32px;height:32px;border-radius:10px;font-size:18px;cursor:pointer;line-height:1;transition:background .15s ease;}
       #app-comments-overlay .cmt-x:hover{background:rgba(255,255,255,.28);}
       #app-comments-overlay .cmt-body{padding:16px 20px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;background:var(--tint);}
