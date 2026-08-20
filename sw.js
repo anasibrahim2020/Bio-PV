@@ -2,12 +2,12 @@
 // نسخة بسيطة: تخلّي التطبيق قابل للتثبيت، وتسرّع فتح الملفات الثابتة.
 // ملاحظة: البيانات (Supabase) دايمًا من النت — مابنعملهاش cache.
 
-const CACHE = 'bionutrition-pv-v66';
+const CACHE = 'bionutrition-pv-v69';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './assets/css/styles.css?v=66',
+  './assets/css/styles.css?v=69',
   './assets/fonts/plus-jakarta-sans-var.woff2',
   './assets/fonts/font-3835919ff0bd.woff2',
   './assets/fonts/font-0305c87c8230.woff2',
@@ -16,7 +16,7 @@ const ASSETS = [
   './assets/js/script-2.js',
   './assets/js/script-3.js',
   './assets/js/script-4.js',
-  './assets/js/script-5.js?v=66',
+  './assets/js/script-5.js?v=69',
   './assets/images/bn-logo.png',
   './assets/images/bn-emblem.png',
   './assets/images/stamp.png',
@@ -44,22 +44,36 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
-// الطلبات: أي حاجة من Supabase أو خارجية تروح للنت مباشرة؛ ملفات الموقع: كاش أولاً ثم النت
+// الطلبات:
+//  • Supabase وأي حاجة خارجية  -> النت مباشرة
+//  • فتح الصفحة (navigate)     -> النت الأول، والكاش احتياطي لو مفيش نت
+//    (ده اللي بيخلي المستخدم ياخد آخر نسخة من غير hard refresh)
+//  • باقي الملفات              -> كاش أولاً (أسرع)، وأسماءها فيها ?v= فبتتجدد لوحدها
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;                       // الكتابة دايمًا للنت
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;        // Supabase وغيره: من النت
+
+  // ── فتح التطبيق: network-first ──
+  if (req.mode === 'navigate') {
+    e.respondWith(
+      fetch(req).then((res) => {
+        const copy = res.clone();
+        caches.open(CACHE).then((c) => c.put('./index.html', copy)).catch(() => {});
+        return res;
+      }).catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
+  // ── باقي الملفات: cache-first ──
   e.respondWith(
     caches.match(req).then((hit) => hit || fetch(req).then((res) => {
       const copy = res.clone();
       caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
       return res;
-    }).catch(() => {
-      // fallback الصفحة يخصّ التنقّل بس — لو رجّعناه لطلب خط/صورة الملف بيتقرا HTML ويبوظ
-      if (req.mode === 'navigate') return caches.match('./index.html');
-      return Response.error();
-    }))
+    }).catch(() => Response.error()))
   );
 });
 
