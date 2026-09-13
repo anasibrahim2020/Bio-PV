@@ -4,8 +4,24 @@
     {
       "name": "bio-pv",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8123"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8123"
+      ],
       "port": 8123
+    },
+    {
+      "name": "credit-app",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8124",
+        "--directory",
+        "../Credit-App/bionutrition-credit-form"
+      ],
+      "port": 8124
     }
   ]
 }
